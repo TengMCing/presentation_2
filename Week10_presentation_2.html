@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Using Remote Sensing Data to Understand Fire Ignition During the 2019-2020 Australia Bushfire Season</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Weihao Li" />
+    <meta name="date" content="2020-10-16" />
+    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
+    <link href="libs/font-awesome-animation-1.0/font-awesome-animation-emi.css" rel="stylesheet" />
+    <script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+    -->
+    <link rel="icon" href="images/favicon.ico"  type='image/x-icon'/>
+    <link rel="stylesheet" href="assets\animate.css" type="text/css" />
+    <link rel="stylesheet" href="assets\monash-logo.css" type="text/css" />
+    <link rel="stylesheet" href="assets\monash-brand.css" type="text/css" />
+    <link rel="stylesheet" href="assets\monash-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="assets\styles.css" type="text/css" />
+    <link rel="stylesheet" href="assets\custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+background-color: #006DAE
+class: middle center hide-slide-number
+
+
+&lt;div class="shade_black"  style="width:60%;right:0;bottom:0;padding:10px;border: dashed 4px white;margin: auto;"&gt;
+&lt;i class="fas fa-exclamation-circle"&gt;&lt;/i&gt; These slides are viewed best by Chrome and occasionally need to be refreshed if elements did not load properly. 
+&lt;/div&gt;
+
+&lt;br&gt;
+
+.white[Press the **right arrow** to progress to the next slide!]
+
+---
+
+
+background-image: url(images/Werombi_Bushfire.jpg)
+background-size: cover
+class: hide-slide-number split-70 title-slide
+count: false
+
+.column.shade_black[.content[
+
+&lt;br&gt;
+
+# .monash-blue.outline-text[Using Remote Sensing Data to Understand Fire Ignition During the 2019-2020 Australia Bushfire Season]
+
+&lt;h2 class="monash-blue2 outline-text" style="font-size: 30pt!important;"&gt;&lt;/h2&gt;
+
+&lt;br&gt;
+
+&lt;h2 style="font-weight:900!important;"&gt;&lt;/h2&gt;
+
+.bottom_abs.width100[
+
+*Weihao Li* 
+
+EBS Honours student,
+Supervised by Dianne Cook and Emily Dodwell
+
+Department of Econometrics and Business Statistics
+
+<span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  wlii0039@student.monash.edu
+
+16 Oct 2020
+
+&lt;br&gt;
+]
+
+
+]]
+
+
+
+&lt;div class="column transition monash-m-new delay-1s" style="clip-path:url(#swipe__clip-path);"&gt;
+&lt;div class="background-image" style="background-image:url('images/large.png');background-position: center;background-size:cover;margin-left:3px;"&gt;
+&lt;svg class="clip-svg absolute"&gt;
+&lt;defs&gt;
+&lt;clipPath id="swipe__clip-path" clipPathUnits="objectBoundingBox"&gt;
+&lt;polygon points="0.5745 0, 0.5 0.33, 0.42 0, 0 0, 0 1, 0.27 1, 0.27 0.59, 0.37 1, 0.634 1, 0.736 0.59, 0.736 1, 1 1, 1 0, 0.5745 0" /&gt;
+&lt;/clipPath&gt;
+&lt;/defs&gt;	
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+
+---
+# 🗺️ Introduction
+
+&lt;h2&gt;👨‍🚒2019-2020 Australia bushfire season👩‍🚒&lt;/h2&gt;
+
+&lt;div class="grid" style="grid: 1fr / 2fr 2fr;"&gt;
+
+&lt;div&gt;
+
+
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;img src="images/home-destroyed-wildfire-pig-charlie-11.jpg" width = "100%"/&gt;
+&lt;/div&gt;
+&lt;div class="item"&gt;
+
+&lt;br&gt;
+
+&lt;br&gt;
+
+&lt;br&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A catastrophic and unprecedented disaster.&lt;/li&gt;
+&lt;li&gt;3094 houses were destroyed, 17M hectares of land burned and 33 lives were lost. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+
+&lt;/div&gt;
+
+
+
+&lt;!-- .footnote[https://www.boredpanda.com/home-destroyed-wildfire-pig-charlie/?utm_source=pinterestm&amp;utm_medium=referral&amp;utm_campaign=organic] --&gt;
+
+
+---
+# 🗺️ Introduction
+
+
+
+
+&lt;h2&gt;⚡  Lightning or 🔥Arson?&lt;/h2&gt;
+
+
+
+&lt;img src="images/1602783588.png" width = "50%" style = "float: left"/&gt;
+&lt;img src="images/bushfire-inforgraphic-not-normal-768x768.jpg" width = "50%" style = "float: right"/&gt;
+
+
+
+
+
+
+&lt;!-- https://twitter.com/MRobertsQLD/status/1220588928706568193 --&gt;
+---
+# 🗺️ Introduction
+## 📡 Remote sensing data
+
+**Remote sensing data** are the reflected energy from the earth collected by remote sensors carried by a satellite or an aircraft. 
+
+Japan Aerospace Exploration Agency  provides a hotspot product taken from the **Himawari-8** satellite.
+
+
+
+
+
+
+&lt;img src="images/hotspots_before.png" style="width: 50%; float:left"/&gt;
+
+&lt;img src="images/hotspots_before_summary.png" style="width: 50%; float:right"/&gt;
+
+
+
+
+
+
+
+
+---
+class: middle center
+## 🎯 Research questions
+
+.monash-blue[(1) Can we detect **bushfire ignitions** from hotspot data?]
+ 
+.monash-blue[(2) Can we accurately predict the **causes** of bushfires during the 2019-2020 Australia bushfire season?]
+
+---
+# 📚 Literature review
+
+**Loboda and Csiszar (2007)**
+
+* Fire Spread Reconstruction (**FSR**)
+* Clustered hotspots in a temporal manner to detect the bushfire ignitions
+
+**Read, Duff, and Taylor (2018)**: 
+
+
+* Fitted a logistic regression generalised additive model to lightning-caused ignitions  in Victoria
+* Used weather conditions, vegetation types, topographic information and environmental impact of human activities as covariates
+
+&lt;br&gt;
+
+.font_my_2[**Others**: Ester et al. (1996), Zhang, Lim, and
+Sharples (2017)]
+---
+# 📂 Data
+## .monash.blue[Data Sources]
+
+.monash-red2[**🔥 Historical fire origins**]: .font_my_2[Department of Environment, Land, Water and Planning]
+
+.monash-red2[**📡 Remote sensing data**]: .font_my_2[Japan Aerospace Exploration Agency]
+
+### .monash.blue[Supplementary]
+
+.font_my[
+**Wind speed data**: .font_my_2[Commonwealth Scientific and Industrial Research Organisation and Automated Surface Observing System]
+
+**Temperature, Rainfall and Solar exposure**:  .font_my_2[Bureau of Meteorology]
+
+**Road map**: .font_my_2[OpenStreetMap]
+
+**Fuel layer**: .font_my_2[Australian Bureau of Agricultural and Resource Economics]
+
+**Fire stations and Recreation sites**: .font_my_2[Department of Environment, Land, Water and Planning]
+]
+
+
+---
+
+# 📂 Data
+
+## Remote sensing data
+
+- How is it collected? 
+
+Remote sensing data are the reflected energy from the earth collected by remote sensors carried by a satellite or an aircraft. 
+
+- What kind of remote sensing data we used?
+
+We use satellite hotspots data taken from the Himawari-8 satellite (P-Tree System, 2020). Data is available on the JAXA FTP site.
+
+
+
+&lt;img src="images/remote-sensing.jpg" width = "100%"/&gt;
+
+&lt;!-- https://oceanservice.noaa.gov/facts/remotesensing.html --&gt;
+---
+# Data wrangling
+## Satellite hotspot data clustering
+
+We develop a spatio-temporal clustering algorithm to track bushfires from noisy satellite hotspots data.
+
+
+
+
+&lt;img src="images/hotspots_example-1.gif" width = "50%" style = "float: left"/&gt;
+
+
+
+
+&lt;img src="images/afterclustering.jpeg" width = "50%" style = "float: right"/&gt;
+
+---
+# Data wrangling
+## Satellite hotspot data clustering
+
+Summary of the algorithm. How it works .... All in one page. Or multiple pages depends on how many rooms I left.
+
+
+---
+# Other data sources
+
+**Weather condition:**
+
+BOM
+
+CSRIO
+
+ASOS
+
+**Historical ignition data**
+
+CFA
+
+**Vegetation information**
+
+Forest of Australia
+
+**Anthropogenic factors**
+
+Proximity to CFA, Camping site and road
+
+etc.
+
+
+---
+# Data integration
+
+How different sources and formats of data combine together. What is the final result of the compiled dataset?
+
+Perhaps can show a snapshot of the dataset here.
+---
+# Explotoray data analysis
+
+Could take up few slides, one slide for one topic.
+
+
+---
+
+# Modelling
+
+In this research, the model building process includes 
+- feature selection
+- hyperparameter tuning
+- candidate model selection.
+
+Model diagnostic has also been performed on the final model.
+
+.monash-blue[As a predictive modelling practice, we examine a spectrum of statistical models.]
+
+
+**Multinomial logistic regression:** .font_small[Some def]
+
+**GAM multinomial logistic regression:** .font_small[Some def]
+
+**Random Forest:** .font_small[Some def]
+
+**XGBoost:** .font_small[Some def]
+
+
+---
+# Feature selection
+
+How `lime` works? Why don't we use global variable importance? How we use `lime`?
+
+What is the feature selection result? Which variables are most important? 
+
+---
+# Hyperparameter tuning
+
+What is the training process for each model? Which package we use to control this process?
+
+---
+# Candidate model selection
+
+How many percentage of test data we use to perform selection?
+
+What metrics we use to compare models?
+
+Explain metrics.
+
+---
+# Results
+## Final model
+
+After performing feature selection and parameter tuning, we find that **random forest** is better than all other candidate models in both prediction accuracy and multi-class AUC.
+
+&lt;br&gt;
+
+&lt;table class="table table-striped" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Model &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Accuracy &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Multi-class AUC &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Multinomial logistic regression &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5272 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7424 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; GAM multinomial logistic regression &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6583 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8233 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Random forest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7495 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8795 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; XGBoost &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7388 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8752 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+# Results
+## Model diagnostic
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; lightning &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; accident &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; arson &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; buring_off &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; predicted_lightning &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 703 (80.34%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 51 (7.59%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 18 (6.69%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 (8.93%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 777 (41.51%) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; predicted_accident &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 77 (8.8%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 494 (73.51%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 55 (20.45%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 (14.29%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 634 (33.87%) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; predicted_arson &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 51 (5.83%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 89 (13.24%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 174 (64.68%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 11 (19.64%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 325 (17.36%) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; predicted_buring_off &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 44 (5.03%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 38 (5.65%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 22 (8.18%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 32 (57.14%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 136 (7.26%) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; total &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 875 (100%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 672 (100%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 269 (100%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 56 (100%) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1872 (100%) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# Results
+## Prediction
+
+&lt;img src="images/2019-2020_prediction.jpeg" width = "100%"/&gt;
+
+---
+
+# Findings
+## The Cause of Australia 2019-2020 bushfire
+
+A summary statistic of the prediction. How many of them are lightning, arson, accident and burning off?
+
+---
+
+# Findings
+## Contribution of predictors
+
+
+![](Week10_presentation_2_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+
+---
+
+# Findings
+## Spatial patterns of different causes
+
+A faceted map shows the probability of 4 different causes across Victoria using simulated data.
+
+---
+# Findings
+
+other findings
+---
+# Adcanced usage
+
+Show how our work can be used differently? Shiny app snapshot. Probability map for the risk of one type of fire ignition.
+
+
+---
+
+##Figure Source 
+.font_small[
+Bushfire - https://upload.wikimedia.org/wikipedia/commons/9/9a/Werombi_Bushfire.jpg
+
+Bushfire_road - https://en.wikipedia.org/wiki/File:Bells_Line_of_Road_Bushfire_Damage_JAN2020.jpg
+
+Bushfire_house - h&lt;span&gt;ttp&lt;/span&gt;s://en.wikipedia.org/wiki/File:Home__&amp;_Machinery_Shed_Destroyed.jpg
+
+SF - https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif
+
+
+Forest - https://www.agriculture.gov.au/abares/forestsaustralia/forest-data-maps-and-tools/spatial-data/forest-cover
+]
+
+## Major references
+
+.font_my_2[
+
+Bates, BC, McCaw, L, &amp; Dowdy, AJ. (2018). Exploratory analysis of lightning-ignited wildfires in the warren region, western australia. Journal of environmental management, 225, 336–345.
+
+Read, N, Duff, TJ, &amp; Taylor, PG. (2018). A lightning-caused wildfire ignition forecasting model for operational use. Agricultural and Forest Meteorology, 253, 233–246
+
+Zhang, Y, Lim, S, &amp; Sharples, JJ. (2017). Wildfire occurrence patterns in ecoregions of new south wales and australian capital territory, australia. Natural Hazards, 87(1), 415–435.
+
+
+Collins, KM, Price, OF, &amp; Penman, TD. (2015). Spatial patterns of wildfire ignitions in south-eastern australia. International Journal of Wildland Fire, 24(8), 1098–1108.
+
+]
+---
+
+background-image: url(images/Werombi_Bushfire.jpg)
+background-size: cover
+class: hide-slide-number split-70
+count: false
+
+.column.shade_black[.content[
+
+&lt;br&gt;&lt;br&gt;
+
+## Acknowledgements
+
+Slides produced using [Rmarkdown](https://github.com/rstudio/rmarkdown) with [xaringan](https://github.com/yihui/xaringan) styling. Raw files for slides, research report and data analysis are available on [MY GITHUB](https://github.com/TengMCing/bushfire-paper)
+
+# Questions?
+
+
+&lt;br&gt; 
+&lt;a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"&gt;&lt;img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /&gt;&lt;/a&gt;&lt;br /&gt;This work is licensed under a &lt;a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"&gt;Creative Commons Attribution-ShareAlike 4.0 International License&lt;/a&gt;.
+
+.bottom_abs.width100[
+
+Author: Weihao Li
+
+Department of Econometrics and Business Statistics&lt;br&gt;
+<span>&lt;i class="fas  fa-envelope faa-float animated "&gt;&lt;/i&gt;</span>  wlii0039@student.monash.edu
+
+]
+
+
+]]
+
+
+
+&lt;div class="column transition monash-m-new delay-1s" style="clip-path:url(#swipe__clip-path);"&gt;
+&lt;div class="background-image" style="background-image:url('images/large.png');background-position: center;background-size:cover;margin-left:3px;"&gt;
+&lt;svg class="clip-svg absolute"&gt;
+&lt;defs&gt;
+&lt;clipPath id="swipe__clip-path" clipPathUnits="objectBoundingBox"&gt;
+&lt;polygon points="0.5745 0, 0.5 0.33, 0.42 0, 0 0, 0 1, 0.27 1, 0.27 0.59, 0.37 1, 0.634 1, 0.736 0.59, 0.736 1, 1 1, 1 0, 0.5745 0" /&gt;
+&lt;/clipPath&gt;
+&lt;/defs&gt;	
+&lt;/svg&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLanguage": "r",
+"highlightLines": true,
+"highlightSpans": false,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%/%total%",
+"navigation": {
+"scroll": false,
+"touch": true,
+"click": false
+},
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'assets/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
