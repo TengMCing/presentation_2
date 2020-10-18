@@ -200,7 +200,7 @@ class: middle center
 &lt;br&gt;
 
 .font_my_2[**Others**: Ester et al. (1996), Zhang, Lim, and
-Sharples (2017)]
+Sharples (2017), Zumbrunnen et al. (2012)]
 ---
 # 📂 Data
 ## .monash.blue[Data Sources]
@@ -226,44 +226,54 @@ Sharples (2017)]
 
 ---
 
-# 📂 Data
+# 🔬 Methodology
 
-## Remote sensing data
-
-- How is it collected? 
-
-Remote sensing data are the reflected energy from the earth collected by remote sensors carried by a satellite or an aircraft. 
-
-- What kind of remote sensing data we used?
-
-We use satellite hotspots data taken from the Himawari-8 satellite (P-Tree System, 2020). Data is available on the JAXA FTP site.
+## Diagram
 
 
 
-&lt;img src="images/remote-sensing.jpg" width = "100%"/&gt;
-
-&lt;!-- https://oceanservice.noaa.gov/facts/remotesensing.html --&gt;
----
-# Data wrangling
-## Satellite hotspot data clustering
-
-We develop a spatio-temporal clustering algorithm to track bushfires from noisy satellite hotspots data.
-
-
-
-
-&lt;img src="images/hotspots_example-1.gif" width = "50%" style = "float: left"/&gt;
-
-
-
-
-&lt;img src="images/afterclustering.jpeg" width = "50%" style = "float: right"/&gt;
+&lt;img src="images/Blank diagram.png" style="width: 100%;"/&gt;
 
 ---
-# Data wrangling
-## Satellite hotspot data clustering
+# 💻 Data wrangling
+## Detect bushfire ignitions from hotspot data
 
-Summary of the algorithm. How it works .... All in one page. Or multiple pages depends on how many rooms I left.
+.font_my[
+We develop a spatio-temporal clustering algorithm to track bushfires from noisy satellite hotspot data.
+]
+
+1️⃣ Divide hotspots into different blocks
+.font_my_2[
+`$$[max(t-24, 1), t], t = 1,2,...,T~(hours)$$`
+]
+
+2️⃣ Cluster hotspots in each block
+
+.font_my_2[
+* Connect two nodes if geodesic between two nodes &lt;= 3km.
+* A connected component is a cluster.
+]
+
+3️⃣ Update the clustering results recursively
+
+.font_my_2[
+* Start from the second hour, till the end.
+* If a hotspot is also in the last hour block, update its membership. And then hotspots who share the component with it will also be updated.
+]
+
+4️⃣ Compute ignition locations
+
+
+
+
+---
+# 💻 Data wrangling
+## Data integration
+
+
+
+
+Calculate the proximity to the nearest CFA station, nearest camping site and nearest road.
 
 
 ---
@@ -467,7 +477,7 @@ A summary statistic of the prediction. How many of them are lightning, arson, ac
 ## Contribution of predictors
 
 
-![](Week10_presentation_2_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+![](Week10_presentation_2_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
 
 ---
 

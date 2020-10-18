@@ -185,7 +185,7 @@ class: middle center
 <br>
 
 .font_my_2[**Others**: Ester et al. (1996), Zhang, Lim, and
-Sharples (2017)]
+Sharples (2017), Zumbrunnen et al. (2012)]
 ---
 # 📂 Data
 ## .monash.blue[Data Sources]
@@ -211,74 +211,54 @@ Sharples (2017)]
 
 ---
 
-# 📂 Data
+# 🔬 Methodology
 
-## Remote sensing data
-
-- How is it collected? 
-
-Remote sensing data are the reflected energy from the earth collected by remote sensors carried by a satellite or an aircraft. 
-
-- What kind of remote sensing data we used?
-
-We use satellite hotspots data taken from the Himawari-8 satellite (P-Tree System, 2020). Data is available on the JAXA FTP site.
+## Diagram
 
 
 
-<img src="images/remote-sensing.jpg" width = "100%"/>
-
-<!-- https://oceanservice.noaa.gov/facts/remotesensing.html -->
----
-# Data wrangling
-## Satellite hotspot data clustering
-
-We develop a spatio-temporal clustering algorithm to track bushfires from noisy satellite hotspots data.
-
-
-
-
-<img src="images/hotspots_example-1.gif" width = "50%" style = "float: left"/>
-
-```{r}
-if (!file.exists("images/afterclustering.jpeg")){
-  library(tidyverse)
-  library(ggthemes)
-  library(rnaturalearth)
-  library(lubridate)
-  au_map <- ne_states(country = 'Australia', returnclass = 'sf')
-  vic_map <- au_map[7,]
-  VIC_hotspots_before_clustering <- read_csv("data/VIC_hotspots_before_clustering.csv")
-  VIC_hotspots_after_clustering <- read_csv("data/VIC_hotspots_after_clustering.csv")
-  hotspots <- read_csv("data/VIC_hotspots_raw.csv")
-  
-  VIC_hotspots_before_clustering$fire_id <- VIC_hotspots_after_clustering$fire_id
-  VIC_hotspots_before_clustering$date <- hotspots$`#obstime`
-  
-  VIC_hotspots_after_clustering <- VIC_hotspots_before_clustering %>%
-    group_by(fire_id) %>%
-    summarise(time_id = min(time_id)) %>%
-    left_join(VIC_hotspots_before_clustering) %>%
-    group_by(fire_id, time_id) %>%
-    summarise(lon = mean(lon), lat = mean(lat), date = mean(date))
-  
-  p <- ggplot(filter(VIC_hotspots_after_clustering, month(date) == 1)) +
-    geom_sf(data = vic_map) +
-    geom_point(aes(lon, lat), alpha = 0.6, size = 3) +
-    theme_map(base_size = 20) +
-    ggtitle("Ignitions in Victoria, January 2020")
-  
-  ggsave(filename = "images/afterclustering.jpeg", plot = p)
-}
-```
-
-
-<img src="images/afterclustering.jpeg" width = "50%" style = "float: right"/>
+<img src="images/Blank diagram.png" style="width: 100%;"/>
 
 ---
-# Data wrangling
-## Satellite hotspot data clustering
+# 💻 Data wrangling
+## Detect bushfire ignitions from hotspot data
 
-Summary of the algorithm. How it works .... All in one page. Or multiple pages depends on how many rooms I left.
+.font_my[
+We develop a spatio-temporal clustering algorithm to track bushfires from noisy satellite hotspot data.
+]
+
+1️⃣ Divide hotspots into different blocks
+.font_my_2[
+$$[max(t-24, 1), t], t = 1,2,...,T~(hours)$$
+]
+
+2️⃣ Cluster hotspots in each block
+
+.font_my_2[
+* Connect two nodes if geodesic between two nodes <= 3km.
+* A connected component is a cluster.
+]
+
+3️⃣ Update the clustering results recursively
+
+.font_my_2[
+* Start from the second hour, till the end.
+* If a hotspot is also in the last hour block, update its membership. And then hotspots who share the component with it will also be updated.
+]
+
+4️⃣ Compute ignition locations
+
+
+
+
+---
+# 💻 Data wrangling
+## Data integration
+
+
+
+
+Calculate the proximity to the nearest CFA station, nearest camping site and nearest road.
 
 
 ---
