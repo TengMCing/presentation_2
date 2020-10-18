@@ -9,6 +9,7 @@
     <link href="libs/font-awesome-animation-1.0/font-awesome-animation-emi.css" rel="stylesheet" />
     <script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>
     <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
     <!--
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
     -->
@@ -203,13 +204,13 @@ class: middle center
 Sharples (2017), Zumbrunnen et al. (2012)]
 ---
 # 📂 Data
-## .monash.blue[Data Sources]
+## Data Sources
 
 .monash-red2[**🔥 Historical fire origins**]: .font_my_2[Department of Environment, Land, Water and Planning]
 
 .monash-red2[**📡 Remote sensing data**]: .font_my_2[Japan Aerospace Exploration Agency]
 
-### .monash.blue[Supplementary]
+### Supplementary
 
 .font_my[
 **Wind speed data**: .font_my_2[Commonwealth Scientific and Industrial Research Organisation and Automated Surface Observing System]
@@ -239,13 +240,17 @@ Sharples (2017), Zumbrunnen et al. (2012)]
 ## Detect bushfire ignitions from hotspot data
 
 .font_my[
-We develop a spatio-temporal clustering algorithm to track bushfires from noisy satellite hotspot data.
+We developd a spatio-temporal clustering algorithm to track bushfires from noisy satellite hotspot data.
 ]
+
+--
 
 1️⃣ Divide hotspots into different blocks
 .font_my_2[
 `$$[max(t-24, 1), t], t = 1,2,...,T~(hours)$$`
 ]
+
+--
 
 2️⃣ Cluster hotspots in each block
 
@@ -254,6 +259,8 @@ We develop a spatio-temporal clustering algorithm to track bushfires from noisy 
 * A connected component is a cluster.
 ]
 
+--
+
 3️⃣ Update the clustering results recursively
 
 .font_my_2[
@@ -261,102 +268,177 @@ We develop a spatio-temporal clustering algorithm to track bushfires from noisy 
 * If a hotspot is also in the last hour block, update its membership. And then hotspots who share the component with it will also be updated.
 ]
 
+--
+
 4️⃣ Compute ignition locations
 
+---
+# 💻 Data wrangling
+## Clustering result
 
 
+
+&lt;img src="images/hotspots_after.png" style="width: 100%; float:left"/&gt;
+
+&lt;!-- &lt;img src="images/hotspots_before_summary.png" style="width: 50%; float:right"/&gt; --&gt;
+
+---
+# 💻 Data wrangling
+## Clustering result
+
+
+
+&lt;img src="images/hotspots_after_summary.png" style="width: 100%; float:left"/&gt;
 
 ---
 # 💻 Data wrangling
 ## Data integration
 
+.font_my[
+🚀 Used **`raster`** to extract values in **Grid** format data by projecting the bushfire ignitions on the grid:] 
+
+.font_my_2[
+  - Forest type, forest height class, forest crown cover and average daily wind speed
+]
+
+&lt;br&gt;
+
+--
+
+.font_my[
+🚀 Used **`sf`** to calculate the geodesic in **Simple features GIS** data for every bushfire ignition: ]
+
+.font_my_2[
+  - Proximity to the nearest CFA station, the nearest camping site and the nearest road
+]
+
+&lt;br&gt;
+
+--
+
+.font_my[
+🚀 Used **`tidyverse`** to summarize the weather statistics:]
+
+.font_my_2[
+  - Temperature, rainfall, solar exposure and wind speed
+  - 1-day average, 7-day average, 14-day average, 28-day average, ..., 720-day average
+]
+
+---
+# 📊 Explotoray data analysis 
+
+## Overview of historical bushfire ignitions
 
 
 
-Calculate the proximity to the nearest CFA station, nearest camping site and nearest road.
+.font_my_2[
+Lightning and accident were the two main sources of historical bushfire ignitions, which took up 41% and 34% respectively. There were 17% bushfires caused by arson.
+]
+
+&lt;img src="images/ignition_summary.png" style="width: 100%; float:left"/&gt;
 
 
 ---
-# Other data sources
+# 📊 Explotoray data analysis 
 
-**Weather condition:**
+## Spatial distribution of historical ignitions
 
-BOM
 
-CSRIO
 
-ASOS
+.font_my_2[
+Lightning-caused bushfires were mostly in the east of Victoria. Bushfires caused by arson were near Bendigo.
+]
 
-**Historical ignition data**
-
-CFA
-
-**Vegetation information**
-
-Forest of Australia
-
-**Anthropogenic factors**
-
-Proximity to CFA, Camping site and road
-
-etc.
+&lt;img src="images/density.png" style="width: 100%; float:left"/&gt;
 
 
 ---
-# Data integration
+# 📊 Explotoray data analysis 
 
-How different sources and formats of data combine together. What is the final result of the compiled dataset?
-
-Perhaps can show a snapshot of the dataset here.
----
-# Explotoray data analysis
-
-Could take up few slides, one slide for one topic.
+## Proximity
 
 
----
 
-# Modelling
+.font_my_2[
+Lightning-caused bushfires were far away from the CFA station and road which made it less reachable. In contrast, bushfires caused by arson were close to CFA station and road.
+]
 
-In this research, the model building process includes 
-- feature selection
-- hyperparameter tuning
-- candidate model selection.
-
-Model diagnostic has also been performed on the final model.
-
-.monash-blue[As a predictive modelling practice, we examine a spectrum of statistical models.]
-
-
-**Multinomial logistic regression:** .font_small[Some def]
-
-**GAM multinomial logistic regression:** .font_small[Some def]
-
-**Random Forest:** .font_small[Some def]
-
-**XGBoost:** .font_small[Some def]
-
+&lt;img src="images/density_cfa.png" style="width: 100%; float:left"/&gt;
 
 ---
+# 📐 Modelling
+
+.monash-blue[We used a **random forest** model to classify different causes of bushfire ignition. ]
+
+
+
+.font_my_2[
+**Random forest** (Breiman, 2001) is an ensemble learning method for building tree-based prediction models. It generates a certain number of decision trees by using the bootstrap aggregating technique and take the majority vote in the case of decision trees as the prediction. In contrast to the decision tree, random forest model can potentially reduce overfitting of the training set.
+]
+
+.monash-blue[.font_my_2[We kept 80% of the data as training set, which was 7497 observations. And the remaining 1872 observations was used as test set.]]
+
+.font_my_2[
+Other candidate models were also tested, but their performance was worse than random forest. Muti-class AUC (Hand and Till, 2001) is a generalization of the commonly used AUC derived by averaging pairwise comparison of classes. ]
+
+&lt;table class=" lightable-classic table" style="font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; font-size: 20px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Model &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Accuracy &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Muti-class AUC &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Multinomial logistic regression &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5272 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7424 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; GAM multinomial logistic regression &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6779 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8233 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Random forest &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7495 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8795 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; XGBoost &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7388 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8752 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+# 📐 Modelling
+
 # Feature selection
 
-How `lime` works? Why don't we use global variable importance? How we use `lime`?
+.font_my[
+We needed to select the most important features out of 55 features, but the global variable importance could be bias and misleading.]
 
-What is the feature selection result? Which variables are most important? 
+.font_my[
+The package **`lime`** was used by us to perform feature selection. It assumes machine learning models are linear at the local scope to provide the local variable importance.
+]
 
----
-# Hyperparameter tuning
+.font_my[
 
-What is the training process for each model? Which package we use to control this process?
+1️⃣ Randomly sample data points around an given observation
 
----
-# Candidate model selection
+2️⃣ Pass sample data points to the model to obtain predictions
 
-How many percentage of test data we use to perform selection?
+3️⃣ Fit a lasso regression on the predictions with the sample data points
 
-What metrics we use to compare models?
+4️⃣ Select the most important variables from the regularization path
 
-Explain metrics.
+5️⃣ repeat 1️⃣-4️⃣ for 100 observations. Variables being selected most frequently are most important . We kept the top 10 most important variables.
+]
 
 ---
 # Results
@@ -477,7 +559,7 @@ A summary statistic of the prediction. How many of them are lightning, arson, ac
 ## Contribution of predictors
 
 
-![](Week10_presentation_2_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+![](Week10_presentation_2_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
 
 ---
 
