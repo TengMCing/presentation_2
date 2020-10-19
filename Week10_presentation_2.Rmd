@@ -460,13 +460,32 @@ training <- na.omit(training)
   training %>%
   mutate(cause = factor(tools::toTitleCase(as.character(cause)), levels = c("Lightning", "Accident", "Arson", "Burning_off"))) %>%
     ggplot() +
-     geom_histogram(aes(cause), stat = "count") +
-    theme_minimal(base_size = 20) +
-    ggtitle("Histogram of causes") +
+     geom_histogram(aes(cause, fill = cause), stat = "count") +
+    theme_minimal(base_size = 40) +
+    ggtitle("Histogram of ignitions by causes") +
+    theme(legend.position = "none") +
+    scale_fill_brewer(palette = "RdBu") +
     xlab("Cause") +
     ylab("Count") -> p
   
-  ggsave(p, filename = "images/ignition_summary.png", height = 4, width = 8, dpi = 600)
+  ggsave(p, filename = "images/ignition_summary.png", height = 10, width = 12, dpi = 600)
+  
+  training %>%
+  mutate(cause = factor(tools::toTitleCase(as.character(cause)), levels = c("Lightning", "Accident", "Arson", "Burning_off"))) %>%
+    ggplot() +
+  geom_bar(data = select(training, -cause), aes(as.Date(paste0(as.character(year), "-01-01")))) +
+    geom_bar(aes(as.Date(paste0(as.character(year), "-01-01")), fill = cause)) +
+    facet_wrap(~cause) +
+    theme_minimal(base_size = 40) +
+    ggtitle("Histogram of ignitions by year") +
+    theme(legend.position = "none") +
+    scale_fill_brewer(palette = "RdBu") +
+    xlab("Year") +
+    ylab("Count") +
+    scale_x_date(date_labels = "%y")-> p
+  
+  
+  ggsave(p, filename = "images/ignition_year.png", height = 9.5, width = 12, dpi = 600)
 }
   
 ```
@@ -475,7 +494,8 @@ training <- na.omit(training)
 Lightning and accident were the two main sources of historical bushfire ignitions, which took up 41% and 34% respectively. There were 17% bushfires caused by arson.
 ]
 
-<img src="images/ignition_summary.png" style="width: 100%; float:left"/>
+<img src="images/ignition_summary.png" style="width: 50%; float:left"/>
+<img src="images/ignition_year.png" style="width: 50%; float:right"/>
 
 
 ---
