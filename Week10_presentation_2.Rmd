@@ -147,7 +147,7 @@ if (!file.exists("images/hotspots_before_summary.png")){
   theme_minimal(base_size = 40) +
   ylab("Count (Log 10)") +
   xlab("Date") +
-  ggtitle("Number of hotspots") +
+  ggtitle("Number of hotspots per day") +
   scale_x_date(date_labels = "%b %y") +
   scale_y_log10()
 
@@ -334,17 +334,17 @@ if (!file.exists("images/hotspots_after_summary.png")){
   group_by(date = floor_date(date, unit = "days")) %>%
   count() %>%
   ungroup() %>%
-  mutate(state = "Number of hotspots") %>%
+  mutate(state = "Number of hotspots per day") %>%
   bind_rows(VIC_hotspots_after_clustering %>%
     group_by(date = floor_date(date, unit = "days")) %>%
     count() %>%
     ungroup() %>%
-    mutate(state = "Number of bushfire ignitions")) %>%
+    mutate(state = "Number of bushfire ignitions per day")) %>%
     mutate(date = as.Date(date)) %>%
     
     ggplot() +
     geom_bar(aes(date, n), stat = "identity") +
-    facet_wrap(~fct_relevel(state, "Number of hotspots"), ncol = 1) +
+    facet_wrap(~fct_relevel(state, "Number of hotspots per day"), ncol = 1) +
     scale_y_log10() +
     theme_minimal(base_size = 30) +
     xlab("Date") +
@@ -388,7 +388,7 @@ if (!file.exists("images/hotspots_after_summary.png")){
 
 .font_my_2[
   - Temperature, rainfall, solar exposure and wind speed
-  - 1-day average, 7-day average, 14-day average, 28-day average, ..., 720-day average
+  - 1-day average, 7-day average, ..., 2-year average
 ]
 
 ---
@@ -485,7 +485,7 @@ training <- na.omit(training)
     scale_x_date(date_labels = "%y")-> p
   
   
-  ggsave(p, filename = "images/ignition_year.png", height = 9.5, width = 12, dpi = 600)
+  ggsave(p, filename = "images/ignition_year.png", height = 10, width = 12, dpi = 600)
 }
   
 ```
@@ -1030,7 +1030,7 @@ read_csv("data/prediction_2019-2020.csv") %>%
 temp[is.na(temp)] <- 0
 
 temp$Total <- temp$Oct + temp$Nov + temp$Dec + temp$Jan + temp$Feb + temp$Mar
-temp$Total <- paste0(temp$Total, " (", round(temp$Total/sum(temp$Total), 2), "%)")
+temp$Total <- paste0(temp$Total, " (", round(temp$Total/sum(temp$Total)*100, 2), "%)")
 
 temp  %>%
   knitr::kable("html")  %>%
@@ -1128,7 +1128,7 @@ ggplot() +
   labs(fill = "Probability") +
   ggtitle("Probability of the new ignition is caused by")-> p
 
-ggsave(p, filename = "images/promap.png", height = 7, width = 12, dpi = 1200, device = png())
+ggsave(p, filename = "images/promap.png", height = 7, width = 12, dpi = 900, device = png())
 }
 ```
 
@@ -1140,9 +1140,10 @@ ggsave(p, filename = "images/promap.png", height = 7, width = 12, dpi = 1200, de
 ## Policy implication
 
 .font_my[
-- May need to consider delivering planned burns on a larger scale in remote areas of Victoria in an earlier date to reduce the risk of lightning-ignited bushfire.
-- May need to reveal the motivations behind the rose of the number of accident-caused bushfire in March 2020 to reduce the controllable impact on bushfire ignition.
-- Time to investigate if there is any disinformation campaign behind the spread of the controversial argument given arson is unlikely to be the main cause.
+<!-- - Our prediction may help CFA and FFMV to improve fuel management in remote area. -->
+- CFA and FFMV may need to consider delivering planned burns on a larger scale in remote areas of Victoria to reduce the risk of lightning-ignited bushfire.
+- CFA may need to reveal the motivations behind the rose of the number of accident-caused bushfire in March 2020 to reduce the controllable impact on bushfire ignition.
+- Our research shows arson was unlikely to be the main cause. Public needs to be cautious with controversial claims that have little evidence support. Don't be a part of the disinformation campaign.
 ]
 
 ---
