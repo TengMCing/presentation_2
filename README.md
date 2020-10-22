@@ -14,4 +14,10 @@ The 2019-2020 Australia bushfires, compared with other major bushfires in histor
 
 ## Speaker
 
-Weihao Li
+- **Weihao Li**
+
+## Supervisors
+
+- **Dianne Cook**
+
+- **Emily Dodwell**
